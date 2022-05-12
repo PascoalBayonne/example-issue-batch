@@ -77,7 +77,6 @@ public class ManagerJobConfig {
                 .delimiter(",")
                 .names("taxNumber","fistName","lastName","email")
                 .linesToSkip(1)
-                .encoding(StandardCharsets.UTF_8.name())
                 .strict(false)
                 .targetType(ClientDTO.class)
                 .build();

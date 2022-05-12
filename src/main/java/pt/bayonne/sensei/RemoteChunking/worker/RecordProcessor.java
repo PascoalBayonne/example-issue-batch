@@ -7,9 +7,9 @@ import pt.bayonne.sensei.RemoteChunking.dto.ClientDTO;
 
 @Component
 @Slf4j
-public class RecordProcessor implements ItemProcessor<ClientDTO, ClientDTO> {
+public class RecordProcessor implements ItemProcessor<Object, Object> {
     @Override
-    public ClientDTO process(ClientDTO item) {
+    public Object process(Object item) {
         log.info("processing item: {}",item);
         return item;
     }
