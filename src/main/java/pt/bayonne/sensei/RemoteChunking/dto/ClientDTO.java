@@ -4,11 +4,12 @@ import lombok.*;
 
 import java.io.Serializable;
 
+@ToString
 public class ClientDTO implements Serializable {
-    private Long taxNumber;
-    private String firstName;
-    private String lastName;
-    private String email;
+     Long taxNumber;
+     String firstName;
+     String lastName;
+     String email;
 
     public ClientDTO(){
 
@@ -21,15 +22,6 @@ public class ClientDTO implements Serializable {
         this.email = email;
     }
 
-    @Override
-    public String toString() {
-        return "ClientDTO{" +
-                "taxNumber=" + taxNumber +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
 
     public Long getTaxNumber() {
         return taxNumber;

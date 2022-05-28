@@ -46,7 +46,6 @@ import java.util.function.Consumer;
 @Configuration
 @EnableBatchProcessing
 @EnableBatchIntegration
-@EnableIntegration
 @EnableBinding(MessageChannelIntegration.class)
 @RequiredArgsConstructor
 public class ManagerJobConfig {
@@ -77,15 +76,18 @@ public class ManagerJobConfig {
                 .delimiter(",")
                 .names("taxNumber","fistName","lastName","email")
                 .linesToSkip(1)
+                .encoding(StandardCharsets.UTF_8.name())
                 .strict(false)
                 .targetType(ClientDTO.class)
                 .build();
     }
 
+    //TODO: MANAGER IS SENDING ITEMS INSTEAD OF CLIENT DTO
+
 
     public TaskletStep dispatchStep(){
        return this.remoteChunkingManagerStepBuilderFactory.get("dispatch-step")
-                .chunk(5)
+                .<ClientDTO,ClientDTO>chunk(100)
                 .reader(reader())
                 .outputChannel(messageChannel.clientRequests())
                 .inputChannel(replies()) //how to use the functional style here?
@@ -94,10 +96,9 @@ public class ManagerJobConfig {
 
 
     @Bean
-    public PollableChannel replies() {
+    public QueueChannel replies() {
         return new QueueChannel();
     }
-
     @Bean
     public IntegrationFlow integrationFlow(){
         return IntegrationFlows.from(messageChannel.clientReplies())
